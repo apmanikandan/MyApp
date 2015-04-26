@@ -1,0 +1,286 @@
+inTrain = createDataPartition(concrete$CompressiveStrength, p = 3/4)[[1]]
+training = concrete[ inTrain,]
+testing = concrete[-inTrain,]
+set.seed(325)
+model = svm(CompressiveStrength ~ ., data = training)
+library(e1071)
+library(caret)
+model = svm(CompressiveStrength ~ ., data = training)
+model
+pred = predict(model, testing)
+RMSE = sqrt(sum((pred - testing$CompressiveStrength)^2))
+predins = predict(model, training)
+RMSEins = sqrt(sum((predins - training$CompressiveStrength)^2))
+RMSE
+rm(list=ls())
+set.seed(3523)
+set.seed(3523)#
+library(AppliedPredictiveModeling)
+data(concrete)
+inTrain = createDataPartition(concrete$CompressiveStrength, p = 3/4)[[1]]
+training = concrete[ inTrain,]
+testing = concrete[-inTrain,]
+set.seed(325)
+library(e1071)
+library(caret)
+fit <- train(CompressiveStrength ~ ., data = training, method = "svmRadial")
+prediction <- predict(fit, testing)
+accuracy(prediction, testing$CompressiveStrength)
+model = svm(CompressiveStrength ~ ., data = training)
+model
+pred = predict(model, testing)
+accuracy(pred, testing$CompressiveStrength)
+RMSE = sqrt(sum((pred - testing$CompressiveStrength)^2))
+RMSE
+RMSEins = sqrt(sum((predins - training$CompressiveStrength)^2))
+predins = predict(model, training)
+RMSEins = sqrt(sum((predins - training$CompressiveStrength)^2))
+pred
+RMSEins
+summary(predins)
+summary(model)
+summary(model)$coef
+summary(model)$sigma
+summary(model)$RMSE
+summary(pred)
+summary(pred)$coef
+summary(pred)$RMSE
+dat
+head(testing)
+swirl()
+library(yhatr)
+install.packages("yhatr")
+library(yhatr)
+main()
+mean()
+mean
+getwd()
+package.skeleton()
+quit()
+cat("/014")
+cat("\014")
+library(earth)
+install.packages("earth")
+cat("\014")
+library(earth)
+data(etitanic)
+head(model.matrix(survived ~ ., data = etitanic))
+dummies <- dummyVars(survived ~ ., data = etitanic)
+library(caret)
+dummies <- dummyVars(survived ~ ., data = etitanic)
+head(predict(dummies, newdata = etitanic))
+head(etitanic)
+dummies
+head(dummies)
+data(MDRR)
+data(mdrr)
+data.frame(table(mdrrDescr$nR11))
+nzv <- nearZeroVar(mdrrDescr, saveMetrics = TRUE)
+nzv[nzv$nzv, ][1:10, ]
+nzv <- nearZeroVar(mdrrDescr)
+dim(mdrrDescr)
+filteredDescr <- mdrrDescr[, -nzv]
+dim(filteredDescr)
+nzv[nzv$nzv, ]
+nzv[nzv$nzv, ][1:10]
+str(filteredDescr)
+names(filteredDescr)
+names(mdrrDescr)
+names(mdrrDescr) - names(filteredDescr)
+load("/Users/manikandanap/Desktop/Data Scientist/Practical Machine Learning/M_rf.RData")
+head(M_rf)
+M_rf
+library(caret)
+trainUrl <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+testUrl <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+OriData <- read.csv(trainUrl, header = TRUE, row.names = 1)
+OriTest <- read.csv(testUrl, header = TRUE, row.names = 1)
+numCase <- nrow(OriData)
+nacol <- sapply(OriData, function(x) sum(is.na(x)|x==""))
+NAd   <- cbind(1:159, nacol/numCase)
+par(mfcol= c(2,1))
+rownames(NAd) = 1:159
+barplot(NAd[,2], xlab = "Variable Index", ylab = "Missing Value Fraction", main = "Missing Value Detection", ylim = c(0,1.0))#
+plot(OriData$user_name, OriData$classe, xlab = "user name", ylab = "classe")
+data <- OriData[,!(nacol/numCase > 0.95)]
+data$cvtd_timestamp <- as.numeric(strptime(as.character(data$cvtd_timestamp),#
+                                           format = "%d/%m/%Y %H:%M"))
+data <- data[,-1]
+nsv <- nearZeroVar(as.matrix(data), saveMetrics = TRUE)
+data <- data[,nsv$nzv == FALSE]
+rm(OriData)
+set.seed(132563)
+Intrain <- createDataPartition(data[,57], p = 0.8, list = FALSE)
+training <- data[Intrain,]
+testing <- data[-Intrain,]
+InValid <- createDataPartition(training[,57], p = 0.25, list = FALSE)
+validation <- training[InValid,]
+training <- training[-InValid,]
+coln <- colnames(data)
+rm(data, Intrain, InValid)
+prep1 <- preProcess(training[,-57], method = c("center","scale"))
+training[,-57] <- predict(prep1, training[,-57])
+validation[,-57] <- predict(prep1, validation[,-57])
+testing[,-57] <- predict(prep1, testing[,-57])
+par(mfcol = c(2,1))
+hist(training[,42], main = "Before Removing Outliers", xlab = colnames(training)[42])
+abnormal <- numeric(0)
+abnormal <- numeric(0)#
+ for (i in 1:ncol(training)){#
+ hist(as.numeric(training[,i]), main = colnames(training)[i])#
+ x <- readline("1. stop 2. mark: ")#
+ if (x ==1 ) break#
+ else if (x==2) abnormal <- cbind(abnormal,i)#
+ }
+hist(training[,42], main = "Before Removing Outliers", xlab = colnames(training)[42])
+a <- which(training[,42] < -11)
+a <- c(a, which(training[,35] < -100))
+a <- c(a, which(training[,35] < -100))#
+a <- c(a, which(training[,9] > 8))
+training <- training[-a,]
+hist(training[,42], main = "After Removing Outliers", xlab = colnames(training)[42])
+hist(training[,42], main = "After Removing Outliers", xlab = colnames(training)[42])#
+rm(a)
+comatrix <- abs(cor(training[,-57]))
+diag(comatrix) <- 0
+diag(comatrix) <- 0#
+pca_condition <- length(which(comatrix > 0.8, arr.ind = F)) != 0
+if (pca_condition) {#
+        prep2 <- preProcess(training[,-57], method = "pca", thres = 0.95)#
+        training <- cbind(predict(prep2,training[,-57]),classe = training[,57])#
+        validation <- cbind(predict(prep2,validation[,-57]),classe = validation[,57])#
+        testing <- cbind(predict(prep2,testing[,-57]),classe = testing[,57])#
+        }
+if (pca_condition) {#
+        prep2 <- preProcess(training[,-57], method = "pca", thres = 0.95)#
+        training <- cbind(predict(prep2,training[,-57]),classe = training[,57])#
+        validation <- cbind(predict(prep2,validation[,-57]),classe = validation[,57])#
+        testing <- cbind(predict(prep2,testing[,-57]),classe = testing[,57])#
+        }#
+#
+rm(comatrix, pca_condition)
+comatrix <- abs(cor(training[,-57]))
+comatrix
+training[,-57]
+head(training[,-57])
+comatrix <- abs(cor(training[,-57]))
+training <- training[-a,]
+a <- which(training[,42] < -11)
+load("/Users/manikandanap/PredictiveMachineLearning/M_svmL.RData")
+head()
+head(M_svmL)
+head(M_svmL.RData)
+head("/Users/manikandanap/PredictiveMachineLearning/M_svmL.RData")
+quit()
+install.pacakges("qdap")
+install.packages("qdap")
+lines <- 20000
+blogs    <- readLines("/Users/manikandanap/capstone/data/raw/final/en_US/en_US.blogs.txt",n=lines,encoding="UTF-8")
+ngrams(blogs, grouping.var = NULL, n = 2)
+require(qdap)
+ngrams(blogs, grouping.var = NULL, n = 2)
+length(blogs)
+summary(blogs)
+ngrams(blogs, grouping.var = NULL, n = 3)
+alltext <- sent_detect(blogs,language = "en", model = NULL)
+text <- VCorpus(VectorSource(alltext))
+require(knitr)#
+require(tm)#
+require(SnowballC)#
+require(stringi)#
+require(xtable)#
+require(wordcloud)#
+require(ggplot2)#
+require(lsa)#
+require(gridExtra)#
+require(qdap)
+text <- VCorpus(VectorSource(alltext))
+text <- tm_map(text, content_transformer(tolower))
+text <- tm_map(text,content_transformer(removeNumbers))#
+text <- tm_map(text,  content_transformer(removePunctuation))
+text <- tm_map(text, removeWords, stopwords('english'))
+text <- tm_map(text, content_transformer(stripWhitespace))
+text <- tm_map(text, stemDocument)
+ProfanityFile<-file("/Users/manikandanap/Capstone/data/raw/final/en_profanity.txt", open="rb")#
+profanity<-readLines(ProfanityFile,encoding="UTF-8")#
+close(ProfanityFile)
+text <- tm_map(text,removeWords,profanity)
+fulldata<-data.frame(text=unlist(sapply(text, `[`, "content")), stringsAsFactors=F)
+fulldata[1:5,1]
+one_grams <- NGramTokenizer(fulldata, Weka_control(min = 1, max = 1))
+library(RWeka)
+install.packages("rweka")
+install.packages("RWeka")
+library(RWeka)
+one_grams <- NGramTokenizer(fulldata, Weka_control(min = 1, max = 1))
+bi_grams <- NGramTokenizer(fulldata, Weka_control(min = 2, max = 2, delimiters = " \\r\\n\\t.,;:\"()?!"))
+tri_grams <- NGramTokenizer(fulldata, Weka_control(min = 3, max = 3, delimiters = " \\r\\n\\t.,;:\"()?!"))
+one_grams_tab <- data.frame(table(one_grams))
+head(one_grams_tab,5)
+tail(one_grams_tab,5)
+bi_grams_tab <- data.frame(table(bi_grams))
+tri_grams_tab <- data.frame(table(tri_grams))
+head(bi_grams_tab,5)
+tail(bi_grams_tab,5)
+tail(tri_grams_tab,5)
+one_grams_sorted <- one_grams_tab[order(one_grams_tab$Freq,decreasing = TRUE),]
+head(one_grams_tab,5)
+head(one_grams_sorted,5)
+tail(one_grams_sorted,5)
+bi_grams_sorted <- bi_grams_tab[order(bi_grams_tab$Freq,decreasing = TRUE),]
+tri_grams_sorted <- tri_grams_tab[order(tri_grams_tab$Freq,decreasing = TRUE),]
+head(bi_grams_sorted,5)
+head(tri)_grams_sorted,5)
+head(tri_grams_sorted,5)
+top_10_one <- one_grams_sorted[1:10,]
+top_10_two <- bi_grams_sorted[1:10,]
+top_10_three <- tri_grams_sorted[1:10,]
+top_10_one
+top_10_two
+top_10_three
+ggplot(top_10_one, aes(x=one_grams,y=Freq), ) + geom_bar(stat="Identity") +geom_text(aes(label=Freq), vjust=-0.4)
+ggplot(top_10_two, aes(x=bi_grams,y=Freq), ) + geom_bar(stat="Identity") +geom_text(aes(label=Freq), vjust=-0.4)
+ggplot(top_10_three, aes(x=tri_grams,y=Freq), ) + geom_bar(stat="Identity") +geom_text(aes(label=Freq), vjust=-0.4)+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+dtm <- DocumentTermMatrix(fulldata)
+install.packages("tm")
+dtm <- DocumentTermMatrix(fulldata)
+dtm <- DocumentTermMatrix(text)
+inspect(dtm[5:10, 740:743])
+inspect(dtm[5:10, 740:750)
+inspect(dtm[5:10, 740:750])
+inspect(dtm[1:10, 740:750])
+inspect(dtm[1:10, 5:9])
+summary(dtm)
+class(Dtm)
+class(dtm)
+ncol(dtm)
+nrow(dtm)
+inspect(dtm[1:10, 33000:330010])
+inspect(dtm[1:10, 33000:33010])
+inspect(dtm[1:10, 30000:30010])
+inspect(dtm[1:100, 30000:30010])
+inspect(dtm[1:100, 33779:33784])
+ncol(dtm)
+inspect(dtm[1:100, 33179:33184])
+inspect(dtm[1:10, 33179:33184])
+findFreqTerms(dtm,5)
+findAssocs(dtm, "opinion", 0.8)
+findAssocs(dtm, "women"", 0.8)
+")
+findAssocs(dtm, "poison", 0.8)
+findAssocs(dtm, "poison", 0.5)
+summary(dtm)
+inspect(dtm[5:10, 740:743])
+inspect(removeSparseTerms(dtm, 0.4))
+inspect(dtm[5:10, 740:743])
+summary(one_grams)
+head(one_grams,5)
+head(one_grams,10)
+ncol(one_grams)
+nrow(one_grams)
+class(one_grams)
+class(one_grams_tab)
+summary(one_grams_tab)
+getwd()
+setwd("/Users/manikandanap/Capstone/Myapp1")
+runGitHub( "Myapp", "apmanikandan")
