@@ -15,6 +15,6 @@ shinyUI(fluidPage(
                       navbarMenu("About",
                            tabPanel("What is this?", includeMarkdown("app.md"))
 
-                )
+        )
         )
 ))

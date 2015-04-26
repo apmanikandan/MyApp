@@ -1,2 +1,2 @@
 # MyApp
-Capstone project work shiny app
+Capstone project work using shiny app
